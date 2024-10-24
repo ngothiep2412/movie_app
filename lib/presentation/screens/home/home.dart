@@ -5,66 +5,91 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: FractionallySizedBox(
-                heightFactor: 0.35,
-                widthFactor: 1,
-                child: FittedBox(
-                  alignment: Alignment.centerLeft,
-                  child: _Header(),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: _Banner(),
-            ),
-            Expanded(child: _TextTrending()),
-            Expanded(
-              flex: 4,
-              child: _Carouse(),
-            )
-          ],
-        ),
+        child: BlocBuilder<HomeBloc, HomeState>(
+            bloc: getIt<HomeBloc>()..add(FetchMoviesEvent()),
+            builder: (context, state) {
+              if (state is HomeLoadingState) {
+                return const Center(
+                  child: CircularProgressIndicator.adaptive(),
+                );
+              } else if (state is HomeLoadedState) {
+                log("test");
+                return Column(
+                  children: [
+                    const Expanded(
+                      child: FractionallySizedBox(
+                        heightFactor: 0.35,
+                        widthFactor: 1,
+                        child: FittedBox(
+                          alignment: Alignment.centerLeft,
+                          child: _Header(),
+                        ),
+                      ),
+                    ),
+                    const Expanded(
+                      flex: 2,
+                      child: _Banner(),
+                    ),
+                    const Expanded(child: _TextTrending()),
+                    Expanded(
+                      flex: 4,
+                      child: _Carouse(
+                        movies: state.movies,
+                      ),
+                    )
+                  ],
+                );
+              }
+              return const Center(
+                child: Text('No data available'),
+              );
+            }),
       ),
     );
   }
 }
 
 class _Carouse extends StatelessWidget {
-  const _Carouse();
+  const _Carouse({required this.movies});
+
+  final List<MovieModel> movies;
 
   @override
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
       options: CarouselOptions(
         aspectRatio: 2.0,
+        // autoPlay: true,
         enlargeCenterPage: false,
-        viewportFraction: 0.75,
+        viewportFraction: 0.85,
         height: double.infinity,
       ),
-      itemCount: (3).round(),
+      itemCount: movies.length,
       itemBuilder: (context, index, realIdx) {
-        return Container(
-          // heightFactor: 1,
-          width: context.sizeScreen.width * 0.7,
-          margin: const EdgeInsets.symmetric(horizontal: 16),
+        final movie = movies[index];
+        final imageUrl =
+            "https://ophim16.cc/_next/image?url=http%3A%2F%2Fimg.ophim1.com%2Fuploads%2Fmovies%2F${movie.posterUrl}&w=384&q=100";
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Stack(
             children: [
-              FractionallySizedBox(
-                heightFactor: 1,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(
-                    30,
-                  ),
-                  child: Image.asset(
-                    'assets/images/banner.png',
-                    fit: BoxFit.cover,
-                  ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: FractionallySizedBox(
+                  heightFactor: 1,
+                  child: LayoutBuilder(builder: (context, constraints) {
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: CachedImageWidget(
+                        imgUrl: imageUrl,
+                        imgHeight: constraints.maxHeight,
+                      ),
+                    );
+                  }),
                 ),
               ),
               Align(
@@ -84,16 +109,18 @@ class _Carouse extends StatelessWidget {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: kWhiteBlur.withOpacity(.3),
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(30),
                       ),
                       child: FractionallySizedBox(
                         widthFactor: 0.85,
-                        child: FittedBox(
+                        child: Align(
                           child: Text(
                             textAlign: TextAlign.center,
-                            'Star Wars: The Last Jedi',
+                            movie.originName!,
+                            maxLines: 2,
                             style: PrimaryFont.regular(18).copyWith(
                               color: Colors.white,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ),
@@ -103,7 +130,7 @@ class _Carouse extends StatelessWidget {
                 ),
               ),
               Align(
-                alignment: const Alignment(0.8, -0.85),
+                alignment: const Alignment(0.85, -0.85),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: BackdropFilter(
@@ -162,7 +189,7 @@ class _Carouse extends StatelessWidget {
                                       )),
                                       Expanded(
                                         child: Text(
-                                          '8.0',
+                                          movie.tmdb!.voteAverage!.toString(),
                                           style:
                                               PrimaryFont.regular(16).copyWith(
                                             color: Colors.white,
@@ -197,11 +224,11 @@ class _TextTrending extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: FractionallySizedBox(
-        heightFactor: 0.35,
+        heightFactor: 0.4,
         widthFactor: 1,
         alignment: Alignment.center,
         child: FittedBox(
-          alignment: Alignment.bottomLeft,
+          alignment: Alignment.centerLeft,
           child: Text(
             'Trending',
             style: PrimaryFont.regular(24).copyWith(color: Colors.white),

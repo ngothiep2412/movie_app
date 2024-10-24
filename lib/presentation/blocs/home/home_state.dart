@@ -11,6 +11,22 @@ final class HomeInitialState extends HomeState {}
 
 final class HomeLoadingState extends HomeState {}
 
-final class HomeLoadedState extends HomeState {}
+final class HomeLoadedState extends HomeState {
+  final List<MovieModel> movies;
 
-final class HomeErrorState extends HomeState {}
+  const HomeLoadedState({
+    this.movies = const [],
+  });
+
+  @override
+  List<Object> get props => [movies];
+}
+
+final class HomeErrorState extends HomeState {
+  final String message;
+
+  const HomeErrorState({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}

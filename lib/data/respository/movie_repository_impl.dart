@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:developer';
 import 'package:movie_app/data/data_source/remote/api_client.dart';
 import 'package:movie_app/data/data_source/remote/api_endpoint_urls.dart';
 import 'package:movie_app/data/models/movie_model.dart';
@@ -11,13 +11,17 @@ class MovieRepositoryImpl extends MovieRepository {
 
   @override
   Future<List<MovieModel>> fetchMovies({int page = 1}) async {
-    final response = await _apiClient.getRequest(
-        path: ApiEndpointUrls.phimMoiCapNhat, page: page);
+    final response = await _apiClient
+        .getRequest(path: ApiEndpointUrls.phimMoiCapNhat, page: page)
+        .timeout(const Duration(seconds: 10));
     if (response.statusCode == 200) {
-      final jsonData = jsonDecode(response.data);
+      final jsonData = response.data;
 
-      final movies =
-          jsonData.map((movie) => MovieModel.fromJson(jsonDecode(movie)));
+      // log("jsonData: $response.data");
+
+      final movies = (jsonData['items'] as List)
+          .map((movie) => MovieModel.fromJson(movie))
+          .toList();
 
       return movies;
     } else {
