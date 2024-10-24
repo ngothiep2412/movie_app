@@ -9,11 +9,7 @@ class SearchScreen extends StatelessWidget {
       body: SafeArea(
         child: BlocBuilder<SearchBloc, SearchState>(
           bloc: getIt<SearchBloc>()..add(FetchMoviesEvent()),
-          buildWhen: (previous, current) {
-            return current is! SearchLoadingSkeletonState;
-          },
           builder: (context, state) {
-            // if (state is SearchLoadingState)
             if (state is SearchLoadedState) {
               return Column(
                 children: [
@@ -66,6 +62,8 @@ class _Categories extends StatelessWidget {
         itemCount: state.categories.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
+          final isSelected = state.selectedCategoryIndex == index;
+
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: FractionallySizedBox(
@@ -94,9 +92,7 @@ class _Categories extends StatelessWidget {
                   Container(
                     height: 3,
                     decoration: BoxDecoration(
-                      color: state.index == index
-                          ? Colors.red
-                          : Colors.transparent,
+                      color: isSelected ? Colors.red : Colors.transparent,
                       borderRadius: BorderRadius.circular(
                         10,
                       ),
@@ -171,9 +167,9 @@ class _MovieGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SearchBloc, SearchState>(
       builder: (context, state) {
-        if (state is SearchLoadingSkeletonState) {
+        if (state is SearchLoadedState && state.isLoadingMovie == true) {
           return const _SkeletonMovie();
-        }
+        } else {}
 
         if (state is SearchLoadedState) {
           return _Movies(
@@ -204,9 +200,12 @@ class _Movies extends StatelessWidget {
         itemBuilder: (context, index) {
           final movie = state.movies[index];
           final imageUrl =
-              "https://ophim16.cc/_next/image?url=http%3A%2F%2Fimg.ophim1.com%2Fuploads%2Fmovies%2F${movie.posterUrl}&w=384&q=100";
+              "https://img.ophim.live/uploads/movies/${movie.posterUrl}";
 
           return GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed('/movie-detail');
+            },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -227,7 +226,7 @@ class _Movies extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: RichText(
                     text: TextSpan(
-                      text: '${movie.originName!} ',
+                      text: '${movie.name!} ',
                       style: PrimaryFont.regular(16).copyWith(
                         color: Colors.white,
                       ),

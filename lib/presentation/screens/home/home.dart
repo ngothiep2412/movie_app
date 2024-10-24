@@ -69,7 +69,7 @@ class _Carouse extends StatelessWidget {
       itemBuilder: (context, index, realIdx) {
         final movie = movies[index];
         final imageUrl =
-            "https://ophim16.cc/_next/image?url=http%3A%2F%2Fimg.ophim1.com%2Fuploads%2Fmovies%2F${movie.posterUrl}&w=384&q=100";
+            "https://img.ophim.live/uploads/movies/${movie.posterUrl}";
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Stack(
@@ -115,7 +115,7 @@ class _Carouse extends StatelessWidget {
                         child: Align(
                           child: Text(
                             textAlign: TextAlign.center,
-                            movie.originName!,
+                            movie.name!,
                             maxLines: 2,
                             style: PrimaryFont.regular(18).copyWith(
                               color: Colors.white,

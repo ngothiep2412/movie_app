@@ -15,37 +15,49 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   }
 
   Future<void> _onSelectCategory(event, emit) async {
-    if (state is SearchLoadedState) {
-      emit(SearchLoadingSkeletonState());
+    final currentState = state as SearchLoadedState;
 
-      var movies = await _movieRepository.fetchMovies(page: 1);
+    emit(
+      currentState.copyWith(
+        selectedCategoryIndex: event.index,
+        isLoadingMovie: true,
+      ),
+    );
 
-      emit(
-        SearchLoadedState(
-          currentPage: 1,
-          index: event.index,
-          movies: movies,
-        ),
-      );
-    }
-  }
-
-  final MovieRepository _movieRepository = getIt<MovieRepository>();
-
-  Future<void> _onFetchMovies(event, emit) async {
     try {
-      emit(SearchLoadingState());
+      final movies = await _movieRepository.fetchMovies(page: 1);
 
-      var movies = await _movieRepository.fetchMovies(page: 1);
-
-      emit(SearchLoadedState(
+      emit(currentState.copyWith(
         movies: movies,
-        index: 0,
         currentPage: 1,
-        categories: kCategories,
+        selectedCategoryIndex: event.index,
+        isLoadingMovie: false,
       ));
     } catch (e) {
-      emit(SearchErrorState(message: 'Failed to load movies $e'));
+      emit(currentState.copyWith(
+        isLoadingMovie: false,
+      ));
     }
+  }
+}
+
+final MovieRepository _movieRepository = getIt<MovieRepository>();
+
+Future<void> _onFetchMovies(event, emit) async {
+  try {
+    emit(SearchLoadingState());
+
+    var movies = await _movieRepository.fetchMovies(page: 1);
+
+    emit(
+      SearchLoadedState(
+        movies: movies,
+        selectedCategoryIndex: 0,
+        currentPage: 1,
+        categories: kCategories,
+      ),
+    );
+  } catch (e) {
+    emit(SearchErrorState(message: 'Failed to load movies $e'));
   }
 }

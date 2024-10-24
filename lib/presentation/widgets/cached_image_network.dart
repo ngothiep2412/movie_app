@@ -21,6 +21,12 @@ class CachedImageWidget extends StatelessWidget {
       width: imgWidth ?? size.width,
       imageUrl: imgUrl, //?? ,
       fit: boxFit ?? BoxFit.cover,
+      filterQuality: FilterQuality.high,
+      placeholder: (context, url) {
+        return const Center(
+          child: CircularProgressIndicator.adaptive(),
+        );
+      },
       errorWidget: (context, url, error) => const Icon(
         Icons.error,
         color: Colors.red,
