@@ -15,7 +15,6 @@ class HomeScreen extends StatelessWidget {
                   child: CircularProgressIndicator.adaptive(),
                 );
               } else if (state is HomeLoadedState) {
-                log("test");
                 return Column(
                   children: [
                     const Expanded(

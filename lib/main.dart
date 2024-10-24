@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:movie_app/core/constants/my_colors.dart';
 import 'package:movie_app/core/services/init_getit.dart';
 import 'package:movie_app/presentation/blocs/home/home_bloc.dart';
+import 'package:movie_app/presentation/blocs/search/search_bloc.dart';
 import 'package:movie_app/presentation/screens/general/general_imports.dart';
 
 Future<void> main() async {
@@ -29,6 +30,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (_) => getIt<HomeBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => getIt<SearchBloc>(),
         ),
       ],
       child: MaterialApp(

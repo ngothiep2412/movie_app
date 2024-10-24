@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:developer';
 import 'package:movie_app/data/data_source/remote/api_client.dart';
 import 'package:movie_app/data/data_source/remote/api_endpoint_urls.dart';
 import 'package:movie_app/data/models/movie_model.dart';

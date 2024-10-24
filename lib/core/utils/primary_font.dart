@@ -22,7 +22,7 @@ class PrimaryFont {
   static TextStyle regular(double size) {
     return TextStyle(
       fontFamily: fontFamily,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w400,
       fontSize: size,
     );
   }
