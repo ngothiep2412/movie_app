@@ -37,7 +37,7 @@ class _GeneralState extends State<General> {
       bottomNavigationBar: BottomBarCreative(
         items: items,
         iconSize: 34,
-        backgroundColor: Colors.transparent,
+        backgroundColor: kPrimaryBackgroundColor,
         color: Colors.white,
         colorSelected: kPrimaryRedColor,
         indexSelected: visit,

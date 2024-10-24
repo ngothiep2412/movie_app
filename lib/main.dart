@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:movie_app/core/constants/my_colors.dart';
 import 'package:movie_app/presentation/screens/general/general_imports.dart';
-import 'package:movie_app/presentation/screens/home/home_imports.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitDown,
+  ]).then((_) async {
+    await DotEnv().load(fileName: 'assets/.env');
+    runApp(const MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {

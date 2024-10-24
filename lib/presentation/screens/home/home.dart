@@ -71,6 +71,7 @@ class _Carouse extends StatelessWidget {
                 alignment: const Alignment(0.0, 0.85),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
+                  clipBehavior: Clip.hardEdge,
                   child: BackdropFilter(
                     filter: ImageFilter.blur(
                       sigmaX: 2,
@@ -103,69 +104,80 @@ class _Carouse extends StatelessWidget {
               ),
               Align(
                 alignment: const Alignment(0.8, -0.85),
-                child: Container(
-                  width: 77,
-                  height: 46,
-                  decoration: BoxDecoration(
-                    color: kWhiteBlur.withOpacity(.3),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Flexible(
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: FractionallySizedBox(
-                                      widthFactor: 0.85,
-                                      alignment: Alignment.centerRight,
-                                      child: Align(
-                                        // alignment: Alignment.centerRight,
-                                        child: Text(
-                                          'IMDb',
-                                          style: PrimaryFont.medium(9).copyWith(
-                                            color: Colors.white,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(
+                      sigmaX: 2,
+                      sigmaY: 2,
+                    ),
+                    child: Container(
+                      width: 77,
+                      height: 46,
+                      decoration: BoxDecoration(
+                        color: kWhiteBlur.withOpacity(.3),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Flexible(
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: FractionallySizedBox(
+                                          widthFactor: 0.85,
+                                          alignment: Alignment.centerRight,
+                                          child: Align(
+                                            // alignment: Alignment.centerRight,
+                                            child: Text(
+                                              'IMDb',
+                                              style: PrimaryFont.regular(9)
+                                                  .copyWith(
+                                                color: Colors.white,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
+                                      const Spacer(),
+                                    ],
                                   ),
-                                  const Spacer(),
-                                ],
-                              ),
+                                ),
+                                Flexible(
+                                  flex: 2,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                          child: FractionallySizedBox(
+                                        widthFactor: 0.85,
+                                        alignment: Alignment.centerRight,
+                                        child: SvgPicture.asset(
+                                            'assets/images/star.svg'),
+                                      )),
+                                      Expanded(
+                                        child: Text(
+                                          '8.0',
+                                          style:
+                                              PrimaryFont.regular(16).copyWith(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
-                            Flexible(
-                              flex: 2,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Expanded(
-                                      child: FractionallySizedBox(
-                                    widthFactor: 0.85,
-                                    alignment: Alignment.centerRight,
-                                    child: SvgPicture.asset(
-                                        'assets/images/star.svg'),
-                                  )),
-                                  Expanded(
-                                    child: Text(
-                                      '8.0',
-                                      style: PrimaryFont.medium(16).copyWith(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               )
@@ -269,7 +281,7 @@ class _Banner extends StatelessWidget {
                             child: FittedBox(
                               child: Text(
                                 'Ready Player one',
-                                style: PrimaryFont.medium(16).copyWith(
+                                style: PrimaryFont.regular(16).copyWith(
                                   color: Colors.white,
                                 ),
                               ),
