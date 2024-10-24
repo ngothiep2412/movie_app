@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:movie_app/config/routes/app_routes.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:movie_app/core/constants/my_colors.dart';
 import 'package:movie_app/core/services/init_getit.dart';
 import 'package:movie_app/presentation/blocs/home/home_bloc.dart';
@@ -15,7 +16,7 @@ Future<void> main() async {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]).then((_) async {
-    await DotEnv().load(fileName: 'assets/.env');
+    // await DotEnv().load(fileName: 'assets/.env');
     runApp(const MyApp());
   });
 }
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
+        onGenerateRoute: AppRoutes.onGenerateRoutes,
         theme: ThemeData(
           scaffoldBackgroundColor: kPrimaryBackgroundColor,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
