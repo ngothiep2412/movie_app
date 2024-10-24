@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             Expanded(
               child: FractionallySizedBox(
-                heightFactor: 0.3,
+                heightFactor: 0.35,
                 widthFactor: 1,
                 child: FittedBox(
                   alignment: Alignment.centerLeft,
@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
             ),
             Expanded(child: _TextTrending()),
             Expanded(
-              flex: 3,
+              flex: 4,
               child: _Carouse(),
             )
           ],
@@ -44,23 +44,132 @@ class _Carouse extends StatelessWidget {
       options: CarouselOptions(
         aspectRatio: 2.0,
         enlargeCenterPage: false,
-        viewportFraction: 0.65,
+        viewportFraction: 0.75,
         height: double.infinity,
       ),
       itemCount: (3).round(),
       itemBuilder: (context, index, realIdx) {
         return Container(
           // heightFactor: 1,
-          width: context.sizeScreen.width * 0.65,
-          margin: const EdgeInsets.symmetric(horizontal: 10),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(
-              30,
-            ),
-            child: Image.asset(
-              'assets/images/banner.png',
-              fit: BoxFit.cover,
-            ),
+          width: context.sizeScreen.width * 0.7,
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          child: Stack(
+            children: [
+              FractionallySizedBox(
+                heightFactor: 1,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(
+                    30,
+                  ),
+                  child: Image.asset(
+                    'assets/images/banner.png',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: const Alignment(0.0, 0.85),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(
+                      sigmaX: 2,
+                      sigmaY: 2,
+                    ),
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 16),
+                      width: 226,
+                      height: 76,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: kWhiteBlur.withOpacity(.3),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: FractionallySizedBox(
+                        widthFactor: 0.85,
+                        child: FittedBox(
+                          child: Text(
+                            textAlign: TextAlign.center,
+                            'Star Wars: The Last Jedi',
+                            style: PrimaryFont.regular(18).copyWith(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Align(
+                alignment: const Alignment(0.8, -0.85),
+                child: Container(
+                  width: 77,
+                  height: 46,
+                  decoration: BoxDecoration(
+                    color: kWhiteBlur.withOpacity(.3),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: FractionallySizedBox(
+                                      widthFactor: 0.85,
+                                      alignment: Alignment.centerRight,
+                                      child: Align(
+                                        // alignment: Alignment.centerRight,
+                                        child: Text(
+                                          'IMDb',
+                                          style: PrimaryFont.medium(9).copyWith(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                ],
+                              ),
+                            ),
+                            Flexible(
+                              flex: 2,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                      child: FractionallySizedBox(
+                                    widthFactor: 0.85,
+                                    alignment: Alignment.centerRight,
+                                    child: SvgPicture.asset(
+                                        'assets/images/star.svg'),
+                                  )),
+                                  Expanded(
+                                    child: Text(
+                                      '8.0',
+                                      style: PrimaryFont.medium(16).copyWith(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
           ),
         );
       },
@@ -114,13 +223,13 @@ class _Banner extends StatelessWidget {
             }),
           ),
           Align(
-            alignment: const Alignment(-0.75, 0.9),
+            alignment: const Alignment(-0.75, 0.85),
             child: Container(
               height: 62,
               width: 211,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: const Color(0xFFDADADA).withOpacity(.3),
+                color: kWhiteBlur.withOpacity(.3),
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -140,16 +249,22 @@ class _Banner extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Flexible(
-                          child: Text(
-                            'Continue Watching',
-                            style: PrimaryFont.regular(12).copyWith(
-                              color: kWhiteGreyColor,
+                          child: FractionallySizedBox(
+                            widthFactor: 0.75,
+                            alignment: Alignment.centerLeft,
+                            child: FittedBox(
+                              child: Text(
+                                'Continue Watching',
+                                style: PrimaryFont.regular(12).copyWith(
+                                  color: kWhiteGreyColor,
+                                ),
+                              ),
                             ),
                           ),
                         ),
                         Flexible(
                           child: FractionallySizedBox(
-                            widthFactor: 0.9,
+                            widthFactor: 0.85,
                             alignment: Alignment.centerLeft,
                             child: FittedBox(
                               child: Text(
