@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/presentation/screens/detail/detail.dart';
+import 'package:movie_app/presentation/screens/detail/detail_imports.dart';
 import 'package:movie_app/presentation/screens/general/general_imports.dart';
 
 class AppRoutes {
