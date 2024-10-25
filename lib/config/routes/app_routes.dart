@@ -9,7 +9,12 @@ class AppRoutes {
         return _materialROute(const General());
 
       case '/movie-detail':
-        return _materialROute(const DetailScreen());
+        final slugName = settings.arguments as String;
+        return _materialROute(
+          DetailScreen(
+            slugName: slugName,
+          ),
+        );
 
       default:
         return _materialROute(const General());

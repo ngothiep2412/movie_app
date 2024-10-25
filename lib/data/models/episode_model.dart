@@ -2,44 +2,16 @@
 //
 //     final episodeModel = episodeModelFromJson(jsonString);
 
-import 'dart:convert';
-
-EpisodeModel episodeModelFromJson(String str) =>
-    EpisodeModel.fromJson(json.decode(str));
-
-String episodeModelToJson(EpisodeModel data) => json.encode(data.toJson());
-
 class EpisodeModel {
-  List<Episode>? episodes;
-
-  EpisodeModel({
-    this.episodes,
-  });
-
-  factory EpisodeModel.fromJson(Map<String, dynamic> json) => EpisodeModel(
-        episodes: json["episodes"] == null
-            ? []
-            : List<Episode>.from(
-                json["episodes"]!.map((x) => Episode.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "episodes": episodes == null
-            ? []
-            : List<dynamic>.from(episodes!.map((x) => x.toJson())),
-      };
-}
-
-class Episode {
   String? serverName;
   List<ServerDatum>? serverData;
 
-  Episode({
+  EpisodeModel({
     this.serverName,
     this.serverData,
   });
 
-  factory Episode.fromJson(Map<String, dynamic> json) => Episode(
+  factory EpisodeModel.fromJson(Map<String, dynamic> json) => EpisodeModel(
         serverName: json["server_name"],
         serverData: json["server_data"] == null
             ? []

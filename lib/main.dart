@@ -5,6 +5,7 @@ import 'package:movie_app/config/routes/app_routes.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:movie_app/core/constants/my_colors.dart';
 import 'package:movie_app/core/services/init_getit.dart';
+import 'package:movie_app/presentation/blocs/detail/detail_bloc.dart';
 import 'package:movie_app/presentation/blocs/home/home_bloc.dart';
 import 'package:movie_app/presentation/blocs/search/search_bloc.dart';
 import 'package:movie_app/presentation/screens/general/general_imports.dart';
@@ -34,6 +35,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => getIt<SearchBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => getIt<DetailBloc>(),
         ),
       ],
       child: MaterialApp(

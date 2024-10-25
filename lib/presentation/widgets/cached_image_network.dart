@@ -19,14 +19,16 @@ class CachedImageWidget extends StatelessWidget {
     return CachedNetworkImage(
       height: imgHeight ?? size.height,
       width: imgWidth ?? size.width,
-      imageUrl: imgUrl, //?? ,
+      imageUrl: imgUrl,
       fit: boxFit ?? BoxFit.cover,
       filterQuality: FilterQuality.high,
-      placeholder: (context, url) {
-        return const Center(
-          child: CircularProgressIndicator.adaptive(),
-        );
-      },
+      // alignment: Alignment.topCenter,
+
+      progressIndicatorBuilder: (context, url, downloadProgress) =>
+          CircularProgressIndicator.adaptive(
+        value: downloadProgress.progress,
+        backgroundColor: Colors.white,
+      ),
       errorWidget: (context, url, error) => const Icon(
         Icons.error,
         color: Colors.red,

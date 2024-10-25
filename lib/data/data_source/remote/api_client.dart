@@ -18,7 +18,6 @@ class ApiClient {
 
   Future<Response> getRequest({
     required String path,
-    required int page,
   }) async {
     try {
       options.headers = baseOptions.headers..addAll(ApiConstant.headers);
@@ -27,7 +26,7 @@ class ApiClient {
           "🚀======================API REQUEST==========================🚀");
       debugPrint("Request Url: ${baseOptions.baseUrl + path}");
 
-      var response = await dio.get("$path?page=$page", options: options);
+      var response = await dio.get(path, options: options);
       debugPrint(
           "🔥======================API RESPONSE==========================🔥");
 

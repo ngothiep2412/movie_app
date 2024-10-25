@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:movie_app/data/data_source/remote/api_client.dart';
 import 'package:movie_app/data/respository/movie_repository_impl.dart';
 import 'package:movie_app/domain/repository/movie_repository.dart';
+import 'package:movie_app/presentation/blocs/detail/detail_bloc.dart';
 import 'package:movie_app/presentation/blocs/home/home_bloc.dart';
 import 'package:movie_app/presentation/blocs/search/search_bloc.dart';
 
@@ -17,5 +18,10 @@ void setupLocator() {
 
   // Blocs
   getIt.registerLazySingleton<HomeBloc>(() => HomeBloc());
-  getIt.registerLazySingleton<SearchBloc>(() => SearchBloc());
+  getIt.registerLazySingleton<SearchBloc>(
+    () => SearchBloc(),
+  );
+  getIt.registerLazySingleton<DetailBloc>(
+    () => DetailBloc(),
+  );
 }

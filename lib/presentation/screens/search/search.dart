@@ -204,7 +204,10 @@ class _Movies extends StatelessWidget {
 
           return GestureDetector(
             onTap: () {
-              Navigator.of(context).pushNamed('/movie-detail');
+              Navigator.of(context).pushNamed(
+                '/movie-detail',
+                arguments: movie.slug,
+              );
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,

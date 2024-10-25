@@ -35,6 +35,7 @@ class MovieModel {
   String? notify;
   String? showtimes;
   String? slug;
+  String? content;
   int? year;
   int? view;
   List<String>? actor;
@@ -74,6 +75,7 @@ class MovieModel {
     this.category,
     this.country,
     this.episodeList,
+    this.content,
   });
 
   factory MovieModel.fromJson(Map<String, dynamic> json) => MovieModel(
@@ -102,6 +104,7 @@ class MovieModel {
         lang: json["lang"],
         notify: json["notify"],
         showtimes: json["showtimes"],
+        content: json["content"],
         slug: json["slug"],
         year: json["year"],
         view: json["view"],
@@ -144,6 +147,7 @@ class MovieModel {
         "lang": lang,
         "notify": notify,
         "showtimes": showtimes,
+        "content": content,
         "slug": slug,
         "year": year,
         "view": view,
